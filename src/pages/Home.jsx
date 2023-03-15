@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import HomeCategoryCards from '../components/HomeCategoryCards';
-import { useAuth } from '../context/authContext';
 
+import HomeCategoryCards from '../components/HomeCategoryCards';
+import HomeFeature from '../components/HomeFeature';
+import { useAuth } from '../context/authContext';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -34,7 +34,9 @@ import "swiper/css/pagination";
 // import "./styles.css";
 
 // import required modules
+import ContentLoader from 'react-content-loader';
 import { Navigation, Pagination } from "swiper";
+import HomeProductsSlider from '../components/HomeProductsSlider';
 
 const Home = () => {
 
@@ -63,8 +65,6 @@ const Home = () => {
     setUrl(`https://apidevelopment.hari-bhari.com/${banners[0]?.banner_image}`)
   },[banners])
 
-  // console.log('url', url)
-  console.log('url', url)
 
   return (
     <main>
@@ -81,20 +81,38 @@ const Home = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-       {banners?.map(banner=>(
-  <SwiperSlide>
+{
+  banners?.length > 0  ? 
 
-  <img src={`https://apidevelopment.hari-bhari.com/${banner?.banner_image}`} className="card-img-top" alt="..." />
+  <>
   
+  {banners?.map(banner=>(
+
+
+<SwiperSlide>
+
+<img src={`https://apidevelopment.hari-bhari.com/${banner?.banner_image}`} className="card-img-top" alt="..." />
+
 </SwiperSlide>
-       ))}
+     ))}
+  </> :
+  <ContentLoader viewBox="0 0 380 70" speed={3}  height={360}>
+  
+    <rect x="0" y="0" rx="5" ry="5" width="70%" height="70" />
+   
+  </ContentLoader>
+
+  
+}
+
+      
       
       </Swiper>
     </>
         </section>
         <HomeCategoryCards/>
-        {/* <HomeProductsSlider/> */}
-        {/* <HomeFeature/> */}
+        <HomeProductsSlider/>
+        <HomeFeature/>
     </main>
   )
 }

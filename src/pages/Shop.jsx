@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { BulletList } from 'react-content-loader';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
-
 const Shop = () => {
     const {
         onAddProduct,
@@ -20,12 +20,20 @@ const Shop = () => {
         categoryAll
     } = useAuth()
     const [products, setproducts] = useState([]);
-    const getProducts = (id) => {
-        // const token = JSON.parse(localStorage.getItem('token'))
-        // console.log(token)
+
+
+   
+
+   const params=useParams();
+   const{id:categoryId}=params;
+console.log('params', params)
+
+    const getProducts = (categoryId) => {
+        const url = categoryId ? `https://apidevelopment.hari-bhari.com/product/find/${categoryId}`  : "https://apidevelopment.hari-bhari.com/product";
+ 
         axios
             .get(
-                `https://apidevelopment.hari-bhari.com/product/find/63b9a5b0b9b50b493d0ef162`,
+                url,
                 {
                     headers: {
                         // Authorization: `Bearer ${token}`639a0c0e56faa05e018e85ec
@@ -39,20 +47,21 @@ const Shop = () => {
     };
 
     useEffect(() => {
-        getProducts()
-    }, [])
-    console.log('activeCategory', products)
+        getProducts(categoryId)
+    }, [categoryId])
+  
+ 
     return (
         <main className='shop__page'>
 
             <section className='container-fluid'>
                 <div className="row">
                     <div className="col-md-3">
-                        <ul class="nav flex-column category__shoppage">
+                        <ul className="nav flex-column category__shoppage">
                             {
                                 categoryAll?.slice(0, 4)?.map(cat => (
 
-                                    <a class=" active" aria-current="page" href="#">
+                                    <a className=" active" aria-current="page" href="#">
                                         <div className="card" style={{ maxWidth: 540 }}>
                                             <div className="row g-0">
                                                 <div className="col-md-4">
@@ -88,24 +97,24 @@ const Shop = () => {
                                     <div className="col-md-6 col-lg-4 col-xl-3 product__card-shoppage pb-3">
                                         <Link to={`/products/${product?._id}`}>
 
-                                        <div className="card h-100">
-                                     
-                                       <img src={`https://apidevelopment.hari-bhari.com/${product?.images[0]}`} className="card-img-top" alt="..." />
-                                            
+                                            <div className="card h-100">
 
-                                            <div className="card-body">
-                                                <h5 className="card-title">{product?.name}</h5>
-                                                <p className="card-text">{product?.description?.substring(0, 50)}...</p>
+                                                <img src={`https://apidevelopment.hari-bhari.com/${product?.images[0]}`} className="card-img-top" alt="..." />
+
+                                               {products.length > 0 ? <>
+                                                    <div className="card-body">
+                                                        <h5 className="card-title">{product?.name}</h5>
+                                                        <p className="card-text">{product?.description?.substring(0, 50)}...</p>
+                                                    </div>
+                                                    <div className="card-footer d-flex items-center justify-content-between">
+                                                        <small className="text-muted d-flex  items-centers justify-content-center mt-2">        <p>   $ {product?.price}</p>
+                                                        </small>
+                                                        <small className="text-muted">                  <a className="nav-link custom__btn px-5 py-2" href="#" >Add</a>
+                                                        </small>
+                                                    </div>
+                                                </>:   <BulletList />}
                                             </div>
-                                            <div className="card-footer d-flex items-center justify-content-between">
-                                                <small className="text-muted d-flex  items-centers justify-content-center mt-2">        <p>   $ {product?.price}</p>
-                                                </small>
-                                                <small className="text-muted">                  <a className="nav-link custom__btn px-5 py-2" href="#" >Add</a>
-                                                </small>
-                                            </div>
-                                     
-                                        </div>
-                                    </Link>
+                                        </Link>
                                     </div>
 
                                 ))

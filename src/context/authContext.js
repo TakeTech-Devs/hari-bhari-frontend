@@ -9,6 +9,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [cartIId, setCartIId] = useState('');
   const [categoryAll, setcategoryAll] = useState([]);
   const [banners, setbanners] = useState([]);
 
@@ -125,10 +126,10 @@ export function AuthProvider({ children }) {
 
   }, []);
   useEffect(() => {
-    if (JSON.stringify(UserInfo) !== "{}") {
+    if (UserInfo?.email) {
       getMyCart();
     }
-  }, [UserInfo]);
+  }, [UserInfo.email]);
 
   const getMyCart = () => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -142,6 +143,7 @@ export function AuthProvider({ children }) {
       .then((res) => {
         setbillingInfo(res.data.info);
         setCartItems(res.data.info.items);
+        setCartIId(res.data.info._id);
       })
       .catch((err) => {
         setCartItems([]);
@@ -194,6 +196,8 @@ token=JSON.parse(localStorage.getItem("token"));
       });
   };
 
+  
+
   const value = {
     onAddProduct,
     onRemoveProduct,
@@ -208,7 +212,8 @@ token=JSON.parse(localStorage.getItem("token"));
     setUserInfo,
     getUserDetails,
     categoryAll,
-    banners
+    banners,
+    cartIId
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -20,17 +20,17 @@ const HomeCategoryCards = () => {
   } = useAuth()
     const cateryies=[3,5,6,6,7,0]
   return (
-    <section className='container home__category mt-5'>
+    <section className=' home__category'>
 
-<div className="row ">
+<div className="row  container mx-auto py-5">
  
  
  
  
  {
 categoryAll?.map((category,index)=>(
-    <div className="col-md-6 col-lg-4 col-xl-3" key={index}>
-    <div className="card">
+    <div className="col-md-3 col-lg-4 " key={index}>
+    <div className="card my-3">
       <img src={`https://apidevelopment.hari-bhari.com/${category?.image}`} className="card-img-top" alt="..." />
       <div className="card-body">
         <h5 className="card-title">{category?.name}</h5>

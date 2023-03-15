@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/authContext';
+import OrderModal from '../modals/OrderModal';
 
 const Cart = () => {
+    const [show, setShow] = useState(false);
 
-
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+const[modalOrder,setModalOrder]=useState(false)
     const {
         onAddProduct,
         onRemoveProduct,
@@ -15,7 +19,8 @@ const Cart = () => {
         billingInfo,
         setbillingInfo,
         getMyCart,
-        UserInfo
+        UserInfo,
+        cartIId,
     } = useAuth();
     const [pdCount, setPdCount] = useState(1)
     const addToCartHandle = (id) => {
@@ -41,7 +46,6 @@ const Cart = () => {
         setPdCount()
     }, [cartItems])
 
-   console.log('cartItems', cartItems?.[0])
     return (
         <>
             <main>
@@ -83,7 +87,14 @@ const Cart = () => {
 
                     </div>))}
                 </section>
+
+                <section>
+                
+                    <button onClick={handleShow} className="nav-link custom__btn px-5 py-2"> 2 items:{" "}    <strike className='mx-2'>&#8377; 477 </strike>{" "}
+                    {" "}   455{" "} Proceed</button>
+                </section>
             </main>
+<OrderModal  cartIId={cartIId} show={show} handleClose={handleClose} setShow={setShow} handleApiSubmit={{}} cartItems={cartItems} />
 
         </>
     )
