@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
-const ForgetPassword = ({ getMyAddress,setShow,show, modalName, handleClose, addressList, formState, handleChange, handleOtpVer }) => {
+const ForgetPassword = ({ getMyAddress,setShow,show, modalName, handleClose, addressList, formState, handleChange, handleOtpVer ,setFormState}) => {
 
     const [email,setEmail]=useState('')
 
@@ -23,7 +23,7 @@ const url= `https://apidevelopment.hari-bhari.com/auth/forgotpassword`;
     }
   )
   .then((res) => {
-   
+    setFormState({...formState,forgetUser:res?.data?.info?.id})
     setShow({
 
         ...Object.keys(show).reduce((acc, key) => ({ ...acc, [key]: false }), {otpModal:true})}) 

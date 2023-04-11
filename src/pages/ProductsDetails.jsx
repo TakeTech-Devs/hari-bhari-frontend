@@ -2,10 +2,50 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
+import CustomLayoutSlider from '../components/CustomLayoutSlider';
 import { useAuth } from '../context/authContext';
 
 const ProductsDetails = () => {
-    const { id: productId } = useParams()
+    const { id: productId } = useParams();
+
+    const [productAll, setproductsAll] = useState([]);
+
+
+
+    
+    const getProducts = (categoryId, slugName) => {
+  
+  
+        const url = `https://apidevelopment.hari-bhari.com/product/find/${categoryId}`
+    
+        axios
+          .get(
+            url,
+            {
+              headers: {
+                // Authorization: `Bearer ${token}`639a0c0e56faa05e018e85ec
+              },
+            }
+          )
+          .then((res) => {
+    
+            setproductsAll(res.data.info);
+          }).catch((err) => {
+           
+          })
+      };
+    
+    
+      useEffect(() => {
+        
+          
+          getProducts('63b9a5b0b9b50b493d0ef162', 'best_deals');
+  
+         
+        
+    
+      }, [])
+
     const { onAddProduct, onRemoveProduct, cartItems, setCartItems,getMyCart, UserInfo } = useAuth();
     const [ProductDetails, setProductDetails] = useState({});
     const [imgDefault, setimgDefault] = useState("");
@@ -143,7 +183,14 @@ const ProductsDetails = () => {
                     </div>
 
                 </section>
+            <div className="container-fluid">
+            <h3 className='mb-3'>Similar Product</h3>
+
+<CustomLayoutSlider products={productAll}/>
+            </div>
             </main>
+
+
         </>
     )
 }

@@ -43,7 +43,7 @@ const AddressModal = ({ modalName, handleClose,setFormState, addressList, setSho
     const handleEditAddress = (id) => {
 
        
-       console.log('id', id)
+  
         const token = JSON.parse(localStorage.getItem("token"));
     
         axios
@@ -57,7 +57,7 @@ const AddressModal = ({ modalName, handleClose,setFormState, addressList, setSho
                 }
             )
             .then((res) => {
-                console.log('res', res)
+             
 
             });
     };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import HomeCategoryCards from '../components/HomeCategoryCards';
 import HomeFeature from '../components/HomeFeature';
@@ -37,6 +37,7 @@ import "swiper/css/pagination";
 import ContentLoader from 'react-content-loader';
 import { Navigation, Pagination } from "swiper";
 import HomeProductsSlider from '../components/HomeProductsSlider';
+import { useGetBannerQuery } from '../features/banner/bannerApiSlice';
 
 const Home = () => {
 
@@ -56,15 +57,11 @@ const Home = () => {
     setUserInfo,
     getUserDetails,
     categoryAll,
-    banners
+   
   } = useAuth();
 
-  const [url,setUrl]=useState("")
-
-  useEffect(()=>{
-    setUrl(`https://apidevelopment.hari-bhari.com/${banners[0]?.banner_image}`)
-  },[banners])
-
+ 
+  const {data:bannerData,isLoading:bannerLoading}=useGetBannerQuery();
 
   return (
     <main>
@@ -82,11 +79,11 @@ const Home = () => {
         className="mySwiper"
       >
 {
-  banners?.length > 0  ? 
+  bannerData?.info?.length > 0  ? 
 
   <>
   
-  {banners?.map(banner=>(
+  {bannerData?.info?.map(banner=>(
 
 
 <SwiperSlide>

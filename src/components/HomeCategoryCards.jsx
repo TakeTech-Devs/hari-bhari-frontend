@@ -1,5 +1,6 @@
-import React from 'react'
-import { useAuth } from '../context/authContext'
+import React from 'react';
+import { useAuth } from '../context/authContext';
+import { useGetCategoryQuery } from '../features/category/categoryApiSlice';
 
 const HomeCategoryCards = () => {
   const {
@@ -18,7 +19,8 @@ const HomeCategoryCards = () => {
     categoryAll,
     banners
   } = useAuth()
-    const cateryies=[3,5,6,6,7,0]
+const {data:categoryData,isLoading:categoryLoading}=useGetCategoryQuery();
+
   return (
     <section className=' home__category'>
 
@@ -28,7 +30,7 @@ const HomeCategoryCards = () => {
  
  
  {
-categoryAll?.map((category,index)=>(
+categoryData?.info?.map((category,index)=>(
     <div className="col-md-3 col-lg-4 " key={index}>
     <div className="card my-3">
       <img src={`https://apidevelopment.hari-bhari.com/${category?.image}`} className="card-img-top" alt="..." />

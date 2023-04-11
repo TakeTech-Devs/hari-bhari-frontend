@@ -2,10 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, ModalHeader } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const OrderModal = ({ cartIId,modalName, handleClose, handleApiSubmit, UserInfo, setUserInfo, handleLoginApi, eyeShow, handleChange, cartItems, formState, proceedOrder, billingInfo, order, setEyeShow, handleUpdateUser, setFormState, show, setShow }) => {
   const showtab = 1;
 
+
+  const navigate=useNavigate()
   const[addresses,setaddresses]=useState({})
 const placeOrder=(e)=>{
 
@@ -24,7 +27,8 @@ axios
   }
 )
 .then((res) => {
- 
+  handleClose()
+navigate('/order')
 
 
 })
@@ -54,7 +58,7 @@ const getMyAddress = () => {
     })
 };
 
-console.log('addresses', addresses)
+
 
   return (
     <Modal
@@ -72,13 +76,10 @@ console.log('addresses', addresses)
             <div className="left-modal-details">
               <ModalHeader>Payment</ModalHeader>
               <table>
+               
                 <tr>
                   <th>Lorem Ipsum MRP</th>
-                  <td>&#8377; 80</td>
-                </tr>
-                <tr>
-                  <th>Lorem Ipsum MRP</th>
-                  <td>&#8377; 700</td>
+                  <td>&#8377; {cartItems?.reduce((itm,curr)=>itm + curr?.actual_price, 0)}</td>
                 </tr>
                 <tr>
                   <th>Product Discount</th>
@@ -93,7 +94,7 @@ console.log('addresses', addresses)
                 </tr>
                 <tr>
                   <th>Grand Total</th>
-                  <td>&#8377; 765</td>
+                  <td>&#8377; {cartItems?.reduce((itm,curr)=>itm + curr?.price , 0)}</td>
                 </tr>
               </table>
 
@@ -108,7 +109,7 @@ console.log('addresses', addresses)
                 >
                   
                   <p>
-                    Please pay &#8377;765 to the delivery executive <br />
+                    Please pay &#8377;{cartItems?.reduce((itm,curr)=>itm + curr?.price , 0)} to the delivery executive <br />
                     When your order is delivered.
                   </p>
                   <Button className="nav-link custom__btn px-2 mt-3 py-1" onClick={placeOrder}>

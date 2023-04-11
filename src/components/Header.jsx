@@ -148,8 +148,6 @@ const Header = () => {
     };
 
   }
-
-  // console.log('UserInfo', UserInfo)
   const handleOtpVer = (e) => {
     e.preventDefault();
     axios
@@ -173,11 +171,12 @@ const Header = () => {
   };
 
 
+  console.log('formState', formState)
   const handleApiSubmit = (e) => {
     e.preventDefault();
     axios
       .put(
-        `https://apidevelopment.hari-bhari.com/auth/verifyotp/${formState?.values?.user_id}`,
+        `https://apidevelopment.hari-bhari.com/auth/verifyotp/${formState?.forgetUser ?formState?.forgetUser :formState?.values?.user_id}`,
         formState.values,
 
       )
@@ -208,7 +207,7 @@ const Header = () => {
     e.preventDefault();
     const token = JSON.parse(localStorage.getItem("token"));
     const { password, ...rest } = UserInfo;
-    console.log('rest', rest)
+   
     axios
       .put(
         `https://apidevelopment.hari-bhari.com/auth/${show.isUpdatePassword ? 'changepassword' : 'updateprofile'}`,
@@ -308,7 +307,7 @@ window.removeEventListener('resize',handleSearchbar)
   return (
 
     <>
-      <nav className="navbar navbar-expand-md bg-light sticky-top">
+      <nav className="navbar navbar-expand-lg bg-light sticky-top">
         <div className="container-fluid">
           <Link to='/' className="navbar-brand nav__logo me-5" href="#">
             <img src={logo} alt="" />

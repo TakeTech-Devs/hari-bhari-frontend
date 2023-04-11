@@ -10,8 +10,6 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [cartIId, setCartIId] = useState('');
-  const [categoryAll, setcategoryAll] = useState([]);
-  const [banners, setbanners] = useState([]);
 
   const [UserInfo, setUserInfo] = useState({});
   const [billingInfo, setbillingInfo] = useState({});
@@ -68,7 +66,7 @@ export function AuthProvider({ children }) {
     }
   };
   const onRemoveProduct = (product, addtodb) => {
-    console.log('first', product, addtodb)
+   
 
     if (addtodb == "addtodb") {
       axios.put(
@@ -108,21 +106,9 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     getUserDetails();
-    getAllCategoris()
-    document.body.classList.remove("stop-scrolling");
-(async function (){
-  axios
-  .get("https://apidevelopment.hari-bhari.com/banner", {
    
-  })
-  .then((res) => {
-    setbanners(res.data.info);
-    // setCartItems(res.data.info.items);
-  })
-  .catch((err) => {
-    // setCartItems([]);
-  });
-})()
+    document.body.classList.remove("stop-scrolling");
+
 
   }, []);
   useEffect(() => {
@@ -179,22 +165,6 @@ token=JSON.parse(localStorage.getItem("token"));
   };
 
 
-  const getAllCategoris = () => {
-
-    axios
-      .get(
-        "https://apidevelopment.hari-bhari.com/category",
-        {
-          headers: {
-            // Authorization: `Bearer ${token}`639a0c0e56faa05e018e85ec
-          },
-        }
-      )
-      .then((res) => {
-
-        setcategoryAll(res.data.info);
-      });
-  };
 
   
 
@@ -211,8 +181,8 @@ token=JSON.parse(localStorage.getItem("token"));
     UserInfo,
     setUserInfo,
     getUserDetails,
-    categoryAll,
-    banners,
+   
+   
     cartIId
   };
 

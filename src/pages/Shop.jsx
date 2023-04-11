@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BulletList } from 'react-content-loader';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
+import { useGetCategoryQuery } from '../features/category/categoryApiSlice';
 const Shop = () => {
     const {
         onAddProduct,
@@ -17,16 +18,17 @@ const Shop = () => {
         UserInfo,
         setUserInfo,
         getUserDetails,
-        categoryAll
+      
     } = useAuth()
     const [products, setproducts] = useState([]);
 
+    const {data:categoryData,isLoading:categoryLoading}=useGetCategoryQuery();
 
    
 
    const params=useParams();
    const{id:categoryId}=params;
-console.log('params', params)
+
 
     const getProducts = (categoryId) => {
         const url = categoryId ? `https://apidevelopment.hari-bhari.com/product/find/${categoryId}`  : "https://apidevelopment.hari-bhari.com/product";
@@ -59,9 +61,9 @@ console.log('params', params)
                     <div className="col-md-3">
                         <ul className="nav flex-column category__shoppage">
                             {
-                                categoryAll?.slice(0, 4)?.map(cat => (
+                                categoryData?.info?.slice(0, 4)?.map(cat => (
 
-                                    <a className=" active" aria-current="page" href="#">
+                                    <Link className=" active" aria-current="page" to={`/shop/${cat?._id}`}>
                                         <div className="card" style={{ maxWidth: 540 }}>
                                             <div className="row g-0">
                                                 <div className="col-md-4">
@@ -70,14 +72,14 @@ console.log('params', params)
                                                 </div>
                                                 <div className="col-md-8">
                                                     <div className="card-body">
-                                                        <h5 className="card-title">Card title</h5>
+                                                        <h5 className="card-title">{cat?.name}</h5>
 
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </a>
+                                    </Link>
 
                                 ))
                             }
@@ -129,30 +131,7 @@ console.log('params', params)
 
                     </div>
                 </div>
-                <div className="row">
-
-                    {
-                        products?.map((category, index) => (
-
-
-                            <div className="col-md-6 col-lg-3  product__card-shoppage pb-3">
-                                <div className="card h-100">
-                                    <img src={`https://apidevelopment.hari-bhari.com/${category?.images[0]}`} className="card-img-top" alt="..." />
-
-                                    <div className="card-body">
-                                        <h5 className="card-title">{category?.name}</h5>
-                                        <p className="card-text">{category?.description?.substring(0, 50)}...</p>
-                                    </div>
-                                    <div className="card-footer">
-                                        <small className="text-muted">                  <a className="nav-link custom__btn px-5 py-2" href="#" >Login</a>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-
-                        ))
-                    }
-                </div>
+              
 
             </section>
         </main>

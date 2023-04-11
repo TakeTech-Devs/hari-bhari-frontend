@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import facebook from '../assets/icons/facebook.png';
-import get from '../assets/icons/get.png';
 import gmail from '../assets/icons/gmail.png';
 import instagram from '../assets/icons/instagram.png';
 import linkedin from '../assets/icons/linkedin.png';
@@ -45,16 +44,15 @@ const Footer = () => {
                         <p>Dealing with enquiries and complaints, customer services and related activities and fixing errors and providing recommendations based on your past purchases. </p>
                     </div>
                     <div className="call col-sm-12">
-                        <img src={get} alt="phone" width="65px" height
-                        ="65px" /> <Link to="">Get In Touch</Link>                            
+<Link to="">Get In Touch</Link>                            
                     </div>
                 </div>
-                <div className="text-center col-sm-mt-5">
-                    <a className="btn btn-social-icon m-3 " href="#"><img src={facebook} alt="#" /></a>
+                <div className="text-center col-sm-mt-5 d-flex footer__socials-icon">
+                    <a className="btn btn-social-icon" href="#"><img src={facebook} alt="#" /></a>
                     <a className="btn btn-social-icon " href="#"><img src={whatsapp} alt="#" /></a>
-                    <a className="btn btn-social-icon m-3" href="#"><img src={twitter} alt="#" /></a>
+                    <a className="btn btn-social-icon" href="#"><img src={twitter} alt="#" /></a>
                     <a className="btn btn-social-icon " href="#"><img src={gmail} alt="#" /></a>
-                    <a className="btn btn-social-icon m-3" href="#"><img src={instagram} alt="#" /></a>
+                    <a className="btn btn-social-icon" href="#"><img src={instagram} alt="#" /></a>
                     <a className="btn btn-social-icon " href="#"><img src={linkedin} alt="" /></a>
                 </div>
             </div>
